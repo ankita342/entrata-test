@@ -1,4 +1,5 @@
 **Test Cases Explained**
+
 studentPage:
 Verify that the Student page on entrata.com loads correctly and displays the expected content.
 
