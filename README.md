@@ -1,90 +1,27 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+**Test Cases Explained**
+studentPage:
+Verify that the Student page on entrata.com loads correctly and displays the expected content.
 
-import java.time.Duration;
+militaryPage:
+Checks that the Military page loads correctly and that the expected content is visible.
 
-public class EntrataSeleniumTests {
-    private WebDriver driver;
-    private WebDriverWait wait;
+resourcesPage:
 
-    @BeforeClass
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-        driver.get("https://www.entrata.com");
-    }
+Verify that the Guides page (referred to as "resources") loads properly and displays the expected content.
 
-    @Test
-    public void teststudentPage() {
-        WebElement studentLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Student")));
-        studentLink.click();
+blogPage:
 
-        String title = driver.getTitle();
-        Assert.assertTrue(title.contains("student"), "student page title is incorrect.");
+Verify that the Blog page loads correctly and that the first blog post is visible.
 
-       
-        WebElement studentContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".student-content-class")));
-       
-        Assert.assertTrue(studentContent.isDisplayed(), "student content is not displayed.");
-    }
 
-    @Test
-    public void testmilitaryPage() {
-        WebElement militaryLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Military")));
-        militaryLink.click();
+**Common Elements -**
 
-        String title = driver.getTitle();
-        Assert.assertTrue(title.contains("military"), "military page title is incorrect.");
+Use of WebDriverWait: Uses a WebDriverWait to handle dynamic content loading, 
 
-       
-       
-        WebElement militaryContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".military-content-class")));
-         Assert.assertTrue(militaryContent.isDisplayed(), "military content is not displayed.");
-    }
+Assertions: Uses Assert.assertTrue() to validate conditions:
 
-    @Test
-    public void testresourcesPage() {
-        WebElement resourcesLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Guides")));
-        resourcesLink.click();
+Setup: The @BeforeClass method sets up the WebDriver, maximizes the browser window, and navigates to the Entrata homepage.
 
-        String title = driver.getTitle();
-        Assert.assertTrue(title.contains("resources"), "resources page title is incorrect.");
+Execution: Each @Test method executes independently, interacting with various links and validating the content on the respective pages.
 
-       
-       
-        WebElement resourcesContent = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".guides-content-class")));
-         Assert.assertTrue(resourcesContent.isDisplayed(), "resources content is not displayed.");
-    }
-
-    @Test
-    public void testblogPage() {
-        WebElement blogLink = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Blog")));
-        blogLink.click();
-
-        String title = driver.getTitle();
-        Assert.assertTrue(title.contains("blog"), "blog page title is incorrect.");
-
-       
-       
-        WebElement firstblogPost = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".blog-post-title")));
-       
-        Assert.assertTrue(firstblogPost.isDisplayed(), "First blog post is not displayed.");
-    }
-
-    @AfterClass
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-}
+Teardown: The @AfterClass method ensures that the WebDriver quits and closes the browser after all tests have been run, freeing up resources.
